@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -ggdb
+CFLAGS = -Wall
 LIBNAMES=termedit
 LIBS=$(addsuffix .a,$(addprefix lib,$(LIBNAMES)))
 LIBFILES=$(addprefix lib/,$(LIBS))
@@ -9,6 +9,9 @@ HINCLUDE=$(addprefix -I$(LIBDIR)/, $(LIBNAMES))
 DESTDIR=bin
 EXE=sr
 EXESOURCE=main.c
+
+export CC
+export CFLAGS
 
 all: $(LIBFILES) $(EXE)
 

@@ -9,7 +9,7 @@
 //#define DELCHAR "\033[[3~"
 #define DELCHAR "\033\133\063\176"
 
-#define PREFIX "SR-0.0.1: "
+//#define PREFIX "SR-0.0.1: "
 
 #include <termios.h>
 #include <fcntl.h>
@@ -18,13 +18,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
+#include <signal.h>
 
 struct lineInformation{
 	char* line;
-	char* prefix;
+	const char* prefix;
+	int prefixLength;
 	int linePosition, lineAllocated;
 	int cursorX, cursorY;
+	int reading, kill;
 	struct winsize windowSize;
+	struct sigaction oldAction;
 };
 
 struct terminalInformation{
@@ -32,8 +36,12 @@ struct terminalInformation{
 	int termFD;
 };
 
-void initTermEdit(struct lineInformation*, struct terminalInformation*);
-void handleInput(struct lineInformation*);
-void closeTermEdit(struct lineInformation*, struct terminalInformation*);
+extern struct lineInformation* li;
+extern struct terminalInformation* ti;
+
+void signalHandler(int signal);
+void termedit_init();
+char* termedit_read(const char*);
+void termedit_close();
 
 #endif

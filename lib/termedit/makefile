@@ -1,5 +1,3 @@
-CC = gcc
-CFLAGS = -Wall -ggdb
 OBJECTS = stringhelp.o termedit.o
 LIB=../libtermedit.a
  
